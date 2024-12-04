@@ -94,9 +94,7 @@ func loadData2(filepath string) [][]int {
 	for _, r := range ret {
 		indx++
 		ret2 = append(ret2, make([]int, 0))
-		// find first )
 		i := strings.Index(r, ")")
-		// remove ( and first )
 		r = r[1:i]
 		nbrs := strings.Split(r, ",")
 		for _, nbr := range nbrs {

@@ -99,8 +99,8 @@ func check2(data []string, x int, y int) bool {
 
 	if 	(data[y-1][x-1] == 'M' && data[y+1][x+1] == 'S' ||
 		data[y-1][x-1] == 'S' && data[y+1][x+1] == 'M') &&
-		(data[y-1][x-1] == 'S' && data[y+1][x+1] == 'M' ||
-		data[y-1][x-1] == 'M' && data[y+1][x+1] == 'S') {
+		(data[y-1][x+1] == 'S' && data[y+1][x-1] == 'M' ||
+		data[y-1][x+1] == 'M' && data[y+1][x-1] == 'S') {
 			return true
 		}
 
@@ -124,7 +124,7 @@ func solve2(data []string) int {
 }
 
 func main() {
-	data := loadData("test.txt")
+	data := loadData("data.txt")
 	fmt.Println(solve(data))
 	fmt.Println(solve2(data))
 }
