@@ -1,12 +1,13 @@
 package main
 
 import (
-    "bufio"
-    "fmt"
-    "log"
-    "os"
-    "strconv"
-    "strings"
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+	"strconv"
+	"strings"
+	"time"
 )
 
 type Equation struct {
@@ -124,5 +125,7 @@ func solve22(equations []Equation) int {
 func main() {
     equa := loadData("data.txt")
     fmt.Println(solve(equa))
+    t0 := time.Now()
     fmt.Println(solve22(equa))
+    fmt.Printf("Execution time: %vs\n", time.Since(t0).Seconds())
 }
