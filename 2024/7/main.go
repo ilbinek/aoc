@@ -7,6 +7,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -113,13 +115,19 @@ func check(equation Equation) bool {
 }
 
 func solve22(equations []Equation) int {
-    ret := 0
+    wg := sync.WaitGroup{}
+    ret := atomic.Int64{}
     for _, eq := range equations {
-        if check(eq) {
-            ret += eq.Result
-        }
+        wg.Add(1)
+        go func (eq Equation) {
+            if check(eq) {
+                ret.Add(int64(eq.Result))
+            }
+            wg.Done()
+        }(eq)
     }
-    return ret
+    wg.Wait()
+    return int(ret.Load())
 }
 
 func main() {
@@ -127,5 +135,5 @@ func main() {
     fmt.Println(solve(equa))
     t0 := time.Now()
     fmt.Println(solve22(equa))
-    fmt.Printf("Execution time: %vs\n", time.Since(t0).Seconds())
+    fmt.Printf("Execution time: %vms\n", time.Since(t0).Milliseconds())
 }
