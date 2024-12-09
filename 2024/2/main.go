@@ -1,13 +1,14 @@
 package main
 
 import (
-    "bufio"
-    "fmt"
-    "log"
-    "math"
-    "os"
-    "strconv"
-    "strings"
+	"bufio"
+	"fmt"
+	"log"
+	"math"
+	"os"
+	"slices"
+	"strconv"
+	"strings"
 )
 
 func loadData(filename string) [][]int {
@@ -92,8 +93,31 @@ func solveTwo(data [][]int) int {
     return ret
 }
 
+func solveTwoTwo(data [][]int) int {
+    ret := 0
+    for i := 0; i < len(data); i++ {
+        if isSafe(data[i]) {
+            ret++
+        } else {
+            // Try to run it by omiting one element
+            for j := 0; j < len(data[i]); j++ {
+                cpy := make([]int, len(data[i]))
+                copy(cpy, data[i])
+                tmp := slices.Delete(cpy, j, j + 1)
+                if isSafe(tmp) {
+                    ret++
+                    break
+                }
+            }
+        }
+    }
+
+    return ret
+}
+
 func main() {
     data := loadData("data.dat")
     fmt.Println(solveOne(data))
     fmt.Println(solveTwo(data))
+    fmt.Println(solveTwoTwo(data))
 }
